@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args){
         // Create main window
         JFrame window = new JFrame("Rule of Three Calculator");
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         window.setSize(new Dimension(320, 170));
         window.setResizable(false);
         window.setLayout(new GridBagLayout());
@@ -43,11 +43,11 @@ public class Main {
         h.setPreferredSize(new Dimension(100, 30));
 
         // Add action listeners for buttons
-        g.addActionListener(_ -> {
+        g.addActionListener(x -> {
             calculate(a, b, c, d); // Calculate result
         });
 
-        h.addActionListener(_ -> {
+        h.addActionListener(x -> {
             copy(d, clipboard); // Copy result to clipboard
         });
 
