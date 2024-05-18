@@ -17,6 +17,7 @@ public class Main {
         window.setSize(new Dimension(320, 170));
         window.setResizable(false);
         window.setLayout(new GridBagLayout());
+        window.setLocationRelativeTo(null);
 
         // Define layout constraints
         GridBagConstraints gbc = new GridBagConstraints();
