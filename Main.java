@@ -6,10 +6,6 @@ import java.util.Objects;
 
 public class Main {
 
-    // Define font and clipboard objects
-    public static Font font = new Font("Roboto", Font.BOLD, 17);
-    public static Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
     public static void main(String[] args){
         // Create main window
         JFrame window = new JFrame("Rule of Three Calculator");
@@ -18,82 +14,81 @@ public class Main {
         window.setResizable(false);
         window.setLayout(new GridBagLayout());
         window.setLocationRelativeTo(null);
+        try{UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}catch(Exception e){System.out.print(e);}
+
 
         // Define layout constraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
 
         // Create text fields and labels
-        JTextField a = new JTextField();
-        JTextField b = new JTextField();
-        JTextField c = new JTextField();
-        JLabel d = new JLabel("X"); // Result label
-        JLabel e = new JLabel("-"); // Separator label
-        JLabel f = new JLabel("-"); // Separator label
-        JButton g = new JButton("Calculate"); // Calculate button
-        JButton h = new JButton("Copy"); // Copy button
+        JTextField input1 = new JTextField();
+        JTextField input2 = new JTextField();
+        JTextField input3 = new JTextField();
+        JLabel resultLabel = new JLabel("X");
+        JLabel separator1 = new JLabel("-");
+        JLabel separator2 = new JLabel("-");
+        JButton calculateButton = new JButton("Calculate");
+        JButton copyButton = new JButton("Copy");
 
-        // Set preferred sizes and font for components
-        a.setPreferredSize(new Dimension(100, 30));
-        b.setPreferredSize(new Dimension(100, 30));
-        c.setPreferredSize(new Dimension(100, 30));
-        d.setFont(font);
-        e.setFont(font);
-        f.setFont(font);
-        g.setPreferredSize(new Dimension(100, 30));
-        h.setPreferredSize(new Dimension(100, 30));
+        // Set preferred sizes for components
+        int inputHeight = 24;
+        int inputWidth = 90;
+        input1.setPreferredSize(new Dimension(inputWidth, inputHeight));
+        input2.setPreferredSize(new Dimension(inputWidth, inputHeight));
+        input3.setPreferredSize(new Dimension(inputWidth, inputHeight));
 
         // Add action listeners for buttons
-        g.addActionListener(x -> {
-            calculate(a, b, c, d); // Calculate result
+        calculateButton.addActionListener(_ -> {
+            calculate(input1, input2, input3, resultLabel); // Calculate result
         });
 
-        h.addActionListener(x -> {
-            copy(d, clipboard); // Copy result to clipboard
+        copyButton.addActionListener(_ -> {
+            copy(resultLabel, Toolkit.getDefaultToolkit().getSystemClipboard()); // Copy result to clipboard
         });
 
         // Add components to the window using grid bag layout
         gbc.gridx = 0;
         gbc.gridy = 0;
-        window.add(a, gbc);
+        window.add(input1, gbc);
 
         gbc.gridx = 2;
-        window.add(b, gbc);
+        window.add(input2, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
-        window.add(c, gbc);
+        window.add(input3, gbc);
 
         gbc.gridx = 2;
-        window.add(d, gbc);
+        window.add(resultLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        window.add(e, gbc);
+        window.add(separator1, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        window.add(f, gbc);
+        window.add(separator2, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        window.add(g, gbc);
+        window.add(calculateButton, gbc);
 
         gbc.gridx = 2;
-        window.add(h, gbc);
+        window.add(copyButton, gbc);
 
         // Make the window visible
         window.setVisible(true);
     }
 
     // Method to calculate result based on input values
-    static void calculate(JTextField a, JTextField b, JTextField c, JLabel d){
+    static void calculate(JTextField input1, JTextField input2, JTextField input3, JLabel resultLabel){
         try {
             // Calculate and display the result
-            d.setText(String.valueOf((Float.parseFloat(b.getText())*Float.parseFloat(c.getText()))/Float.parseFloat(a.getText())));
+            resultLabel.setText(String.valueOf((Float.parseFloat(input2.getText())*Float.parseFloat(input3.getText()))/Float.parseFloat(input1.getText())));
         } catch (Exception e){
             // If an error occurs (e.g., division by zero), display "X"
-            d.setText("X");
+            resultLabel.setText("X");
         }
     }
 
